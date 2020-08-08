@@ -27,8 +27,7 @@ db.then(() => {
 const date = new Date().toGMTString();
 const issuer = () => {
   if (isGitAction) {
-    return `Triggered by ${gitActor}.
-        This is the ${timeRan}th time the ${workflowName} has been run!`;
+    return `Triggered by ${gitActor}. This is the ${timeRan}th time the ${workflowName} has been run!`;
   } else if (isLocaTest) {
     return "Triggered from dev environment.";
   } else {

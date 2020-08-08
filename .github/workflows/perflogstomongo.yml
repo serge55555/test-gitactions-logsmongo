@@ -1,0 +1,24 @@
+name: Run perflogs on MongoDB testing cluster
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "*/20 * * * *"
+
+jobs:
+  runlog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+          check-latest: true
+      - run: npm install
+      - name: Start run
+        run: npm start
+        env:
+          MONGO_URL: ${{secrets.MONGO_URL}}
