@@ -10,7 +10,8 @@ const isGitAction = process.env.GITHUB_ACTIONS,
   gitActor = process.env.GITHUB_ACTOR,
   timeRan = process.env.GITHUB_RUN_NUMBER,
   workflowName = process.env.GITHUB_WORKFLOW,
-  isLocaTest = process.env.LOCAL_DEV;
+  isLocaTest = process.env.LOCAL_DEV,
+  trigerEventName = process.env.GITHUB_EVENT_NAME;
 
 // Start timer
 const timerStart = performance.now();
@@ -27,7 +28,7 @@ db.then(() => {
 const date = new Date().toGMTString();
 const issuer = () => {
   if (isGitAction) {
-    return `Triggered by ${gitActor}. This is the ${timeRan}th time the ${workflowName} has been run!`;
+    return `This is the ${timeRan}th time the ${workflowName} has been run!`;
   } else if (isLocaTest) {
     return "Triggered from dev environment.";
   } else {
@@ -43,6 +44,7 @@ collection
   .insert({
     date: date,
     issuer: issuer(),
+    triggeredBy: trigerEventName,
   })
   .then((doc) => {
     timeTaken = performance.now() - timerStart;
