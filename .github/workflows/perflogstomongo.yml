@@ -20,7 +20,9 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v1
       with:
-        node-version: latest
+        node-version: '12'
+        check-latest: true
+    - run: npm install
     - name: Start run
       run: npm start
       env: ${{secrets.MONGO_URL}}
